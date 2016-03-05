@@ -38,16 +38,16 @@ gitFav.controller('gitCtrl', ['$scope', '$http', function ($scope, $http) {
   };
 
   $scope.getFav = function () {
-    var a = 0,
+    var a = [],
         b = 0;
 
+    b = Math.max.apply(null, $scope.frequency);
     for (var i = 0; i < $scope.frequency.length; i++) {
-      if ($scope.frequency[i] > b) {
-        b = $scope.frequency[i];
-        a = i;
+      if ($scope.frequency[i] === b) {
+        a.push($scope.languages[i]);
       }
     }
-    $scope.languages = $scope.languages[a];
+    $scope.languages = a;
     $scope.frequency = "Repositories: " + b;
   }
 }])

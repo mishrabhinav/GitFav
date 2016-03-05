@@ -34,8 +34,8 @@
     <div class="row">
       <button class="btn btn-success isfull" ng-click="process(username)">GitFav!</button>
     </div>
-    <div class="row iscenter" >
-      <h1>{{languages}}</h1>
+    <div class="row iscenter">
+      <h3 ng-repeat="l in languages" >{{l}}</h3>
     </div>
     <div class="row iscenter">
       <h4>{{frequency}}</h4>
