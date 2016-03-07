@@ -3,7 +3,9 @@ body {
 }
 
 .willoverflow {
-  overflow: hidden;
+  word-wrap: break-word;
+  overflow-x: auto;
+  
 }
 
 .isfull {
