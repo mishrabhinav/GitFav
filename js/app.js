@@ -4,7 +4,7 @@ gitFav.controller('gitCtrl', ['$scope', '$http', function ($scope, $http) {
 
   $scope.process = function (username) {
 
-    $http.get("https://api.github.com/users/" + username + "/repos")
+    $http.get("https://api.github.com/users/" + encodeURIComponent(username) + "/repos")
       .success(function(data) {
         $scope.languages = [];
         $scope.frequency = [];
