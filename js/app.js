@@ -49,7 +49,8 @@ gitFav.controller('gitCtrl', ['$scope', '$http', function ($scope, $http) {
     }
 
     if (favLang.length === 0) {
-      favlang.push("This User has no repositories");  
+      favLang.push("This User has no repositories");
+      maxNum = 0;
     }
 
     $scope.languages = favLang;
