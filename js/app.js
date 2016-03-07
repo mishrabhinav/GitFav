@@ -3,16 +3,18 @@ var gitFav = angular.module('gitFav', []);
 gitFav.controller('gitCtrl', ['$scope', '$http', function ($scope, $http) {
 
   $scope.process = function (username) {
+
     $http.get("https://api.github.com/users/" + username + "/repos")
       .success(function(data) {
         $scope.languages = [];
         $scope.frequency = [];
+        var langs = [];
+
         for (var i = 0; i < data.length; i++) {
-          $scope.languages.push(data[i].language);
+          langs.push(data[i].language);
         }
-        $scope.languages.sort();
-        $scope.analyzeRepoData();
-        $scope.getFav();
+        langs.sort();
+        $scope.analyzeRepoData(langs);
 
       })
       .error(function(err, status) {
@@ -21,33 +23,36 @@ gitFav.controller('gitCtrl', ['$scope', '$http', function ($scope, $http) {
       })
   };
 
-  $scope.analyzeRepoData = function () {
-    var a = [], b = [], prev;
+  $scope.analyzeRepoData = function (langs) {
 
-    for ( var i = 0; i < $scope.languages.length; i++ ) {
-      if ( $scope.languages[i] !== prev ) {
-        a.push($scope.languages[i]);
-        b.push(1);
+    var repos = [],
+        frequency = [],
+        prev,
+        favLang = [],
+        maxNum = 0;
+
+    for ( var i = 0; i < langs.length; i++ ) {
+      if ( langs[i] !== prev ) {
+        repos.push(langs[i]);
+        frequency.push(1);
       } else {
-        b[b.length-1]++;
+        frequency[frequency.length-1]++;
       }
-      prev = $scope.languages[i];
+      prev = langs[i];
     }
-    $scope.languages = a;
-    $scope.frequency = b;
-  };
 
-  $scope.getFav = function () {
-    var a = [],
-        b = 0;
-
-    b = Math.max.apply(null, $scope.frequency);
-    for (var i = 0; i < $scope.frequency.length; i++) {
-      if ($scope.frequency[i] === b) {
-        a.push($scope.languages[i]);
+    maxNum = Math.max.apply(null, frequency);
+    for (var i = 0; i < frequency.length; i++) {
+      if (frequency[i] === maxNum) {
+        favLang.push(repos[i]);
       }
     }
-    $scope.languages = a;
-    $scope.frequency = "Repositories: " + b;
+
+    if (favLang.length === 0) {
+      favlang.push("This User has no repositories");  
+    }
+
+    $scope.languages = favLang;
+    $scope.frequency = "Repositories: " + maxNum;
   }
 }])
