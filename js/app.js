@@ -16,7 +16,7 @@ gitFav.controller('gitCtrl', ['$scope', '$http', function ($scope, $http) {
 
       })
       .error(function(err, status) {
-        $scope.languages = username;
+        $scope.languages = [username];
         $scope.frequency = err.message + " " + status;
       })
   };
